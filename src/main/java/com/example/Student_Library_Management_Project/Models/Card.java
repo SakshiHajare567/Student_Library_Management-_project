@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "card")
@@ -26,6 +28,10 @@ public class Card {
     @OneToOne
     @JoinColumn
     private Student studentVariableName;
+
+    // card is prent wrt to book
+    @OneToMany(mappedBy ="card",cascade = CascadeType.ALL)
+    List<Book> bookIssued = new ArrayList<>();
 
     public Student getStudentVariableName() {
         return studentVariableName;
@@ -70,13 +76,7 @@ public class Card {
     public void setCardStatus(CardStatus cardStatus) {
         this.cardStatus = cardStatus;
     }
-   // public Student getStudent() {
-      //  return student;
-  //  }
 
-   // public void setStudent(Student student) {
-      //  this.student = student;
-   // }
 
 
 }
