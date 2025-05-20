@@ -3,50 +3,43 @@ package com.example.Student_Library_Management_Project.Models;
 import com.example.Student_Library_Management_Project.Enums.Genre;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name="book")
+@Table(name = "book")
 public class Book {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  int id;
-    private  String name;
-    private  int pages;
+    private int id;
 
-@Enumerated(value=EnumType.STRING)
-    private Genre genre ;
+    private String name;
+    private int pages;
 
-    //Book is child wrt to author
-    //setting here foreign ey stander 3 step
+    @Enumerated(value = EnumType.STRING)
+    private Genre genre;
+
+    // Bidirectional mapping between Book and Transactions
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private List<Transactions> listOfTransactions = new ArrayList<>();
+
+    // Book is child wrt to Author
     @ManyToOne
     @JoinColumn
     private Author author;
 
-    //Book is child wrt to card
+    // Book is child wrt to Card
     @ManyToOne
     @JoinColumn
     private Card card;
 
     private boolean issued;
 
-    public Card getCard() {
-        return card;
-    }
+    // Constructors
+    public Book() {}
 
-    public void setCard(Card card) {
-        this.card = card;
-    }
-
-    public boolean isIssued() {
-        return issued;
-    }
-
-    public void setIssued(boolean issued) {
-        this.issued = issued;
-    }
-
-    public Book() {
-    }
-
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -79,11 +72,39 @@ public class Book {
         this.genre = genre;
     }
 
+    public List<Transactions> getListOfTransactions() {
+        return listOfTransactions;
+    }
+
+    public void setListOfTransactions(List<Transactions> listOfTransactions) {
+        this.listOfTransactions = listOfTransactions;
+    }
+
     public Author getAuthor() {
         return author;
     }
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public Card getCard() {
+        return card;
+    }
+
+    public void setCard(Card card) {
+        this.card = card;
+    }
+
+    public boolean isIssued() {
+        return issued;
+    }
+
+    public void setIssued(boolean issued) {
+        this.issued = issued;
+    }
+
+    public List<Transactions> getListOfTransaction() {
+        return listOfTransactions;
     }
 }

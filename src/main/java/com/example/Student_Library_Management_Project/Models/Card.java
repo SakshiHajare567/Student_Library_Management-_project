@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "card")
 public class Card {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -25,24 +26,17 @@ public class Card {
     @Enumerated(EnumType.STRING)
     private CardStatus cardStatus;
 
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
+    private List<Book> bookIssued = new ArrayList<>();
+
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
+    private List<Transactions> listOfTransaction = new ArrayList<>();
+
     @OneToOne
     @JoinColumn
     private Student studentVariableName;
 
-    // card is prent wrt to book
-    @OneToMany(mappedBy ="card",cascade = CascadeType.ALL)
-    List<Book> bookIssued = new ArrayList<>();
-
-    public Student getStudentVariableName() {
-        return studentVariableName;
-    }
-
-    public void setStudentVariableName(Student studentVariableName) {
-        this.studentVariableName = studentVariableName;
-    }
-
-    public Card() {
-    }
+    public Card() {}
 
     // Getters and setters
     public int getId() {
@@ -77,6 +71,27 @@ public class Card {
         this.cardStatus = cardStatus;
     }
 
+    public List<Book> getBookIssued() {
+        return bookIssued;
+    }
 
+    public void setBookIssued(List<Book> bookIssued) {
+        this.bookIssued = bookIssued;
+    }
 
+    public List<Transactions> getListOfTransaction() {
+        return listOfTransaction;
+    }
+
+    public void setListOfTransaction(List<Transactions> listOfTransaction) {
+        this.listOfTransaction = listOfTransaction;
+    }
+
+    public Student getStudentVariableName() {
+        return studentVariableName;
+    }
+
+    public void setStudentVariableName(Student studentVariableName) {
+        this.studentVariableName = studentVariableName;
+    }
 }
