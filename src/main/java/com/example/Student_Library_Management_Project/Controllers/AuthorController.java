@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;*/
 package com.example.Student_Library_Management_Project.Controllers;
 
 import com.example.Student_Library_Management_Project.DTOs.AuthorEntryDto;
+import com.example.Student_Library_Management_Project.DTOs.AuthorResponseDtos;
 import com.example.Student_Library_Management_Project.Models.Author;
 import com.example.Student_Library_Management_Project.Service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,11 @@ public class AuthorController {
   public String addAuthor(@RequestBody AuthorEntryDto authorEntryDto) {
 
     return authorService.createAuthor(authorEntryDto);
+  }
+
+  //Book my show models
+  @GetMapping("getAuthor")
+  public AuthorResponseDtos getAuthor (@RequestParam("authorId")Integer authorId){
+    return  authorService.getAuthor(authorId);
   }
 }
